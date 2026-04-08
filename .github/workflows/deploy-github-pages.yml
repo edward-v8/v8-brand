@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build
+      - name: Build (production config, no Replit plugins)
+        run: npx vite build --config vite.prod.config.ts
         env:
           NODE_ENV: production
 
