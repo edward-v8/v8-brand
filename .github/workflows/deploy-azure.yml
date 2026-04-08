@@ -26,13 +26,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build (production config, no Replit plugins)
+      - name: Build with production config (no Replit plugins)
         run: npx vite build --config vite.prod.config.ts
         env:
           NODE_ENV: production
 
-      - name: Copy Azure config to build output
+      - name: Copy routing config to build output
         run: cp staticwebapp.config.json dist/public/
+
+      - name: List build output (debug)
+        run: ls -la dist/public/
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
@@ -40,9 +43,9 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "dist/public"
+          app_location: "/"
           api_location: ""
-          output_location: ""
+          output_location: "dist/public"
           skip_app_build: true
 
   close_pull_request_job:
